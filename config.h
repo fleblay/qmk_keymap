@@ -42,8 +42,12 @@
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 //Allow use of layer_tap hold keys shortly after tap instead of repeating key
-#define TAPPING_FORCE_HOLD
+//DEPRECATED in favor of quick_tap_term
+//#define TAPPING_FORCE_HOLD
 //#define TAPPING_FORCE_HOLD_PER_KEY
+
+//Disable completely
+#define QUICK_TAP_TERM 0
 
 #define TAPPING_TERM 170
 #define TAPPING_TERM_PER_KEY
