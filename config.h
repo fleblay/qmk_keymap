@@ -35,7 +35,8 @@
 
 //Make Modfier keys (ie home-row mods) behave like layer tap
 //and follow HOLD_ON_OTHER_KEY_PRESS_PER_KEY
-#define IGNORE_MOD_TAP_INTERRUPT
+//Remove in newer QMK updates as it is enable by default
+//#define IGNORE_MOD_TAP_INTERRUPT
 //Decide per key if the HOLD action should be selected if a key is pressed
 //while a dual role key with an hold action is pressed but before TAPPING_TERM
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY

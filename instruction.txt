@@ -1,0 +1,10 @@
+brew install qmk/qmk/qmk
+qmk setup
+qmk config user.keyboard=splitkb/kyria/rev2 user.keymap=fleblay
+qmk new-keymap
+
+#clone the repo where the keymap is
+
+#Bug when using default (rev3 selected by default) ?
+qmk compile -kb=splitkb/kyria/rev2 -km fleblay
+qmk flash -kb=splitkb/kyria/rev2 -km fleblay
