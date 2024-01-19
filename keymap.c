@@ -7,6 +7,12 @@ enum layers {
     _NUMPAD,
 };
 
+enum custom_keycodes {
+    TMUXNEXT_W = SAFE_RANGE,
+    TMUXPREV_W,
+    TMUXNEXT_S,
+    TMUXPREV_S,
+};
 
 #define RGUI_SCN  RGUI_T(KC_SCLN)
 #define LGUI_A  LGUI_T(KC_A)
@@ -17,13 +23,9 @@ enum layers {
 #define RCTL_K  RCTL_T(KC_K)
 #define RALT_QOT  RALT_T(KC_QUOT)
 #define RALT_L	  RALT_T(KC_L)
-//NUMPAD NO LONGER USED
-//#define LAYER3_D  LT(3,KC_D)
 #define LAYER2_F  LT(2,KC_F)
 #define LAYER1_G  LT(1,KC_G)
 #define LAYER2_J  LT(2,KC_J)
-//NUMPAD NO LONGER USED
-//#define LAYER3_K  LT(3,KC_K)
 
 #define BUFF_LEN 6
 
@@ -86,6 +88,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		  --usr_keystrokes;
       }
 	  break;
+    case TMUXNEXT_W:
+      if (record->event.pressed) {
+		  SEND_STRING(SS_LCTL(" ") SS_DELAY(10) "n");
+      }
+	  break;
+    case TMUXPREV_W:
+      if (record->event.pressed) {
+		  SEND_STRING(SS_LCTL(" ") SS_DELAY(10) "p");
+      }
+	  break;
+    case TMUXNEXT_S:
+      if (record->event.pressed) {
+		  SEND_STRING(SS_LCTL(" ") SS_DELAY(10) ")");
+      }
+	  break;
+    case TMUXPREV_S:
+      if (record->event.pressed) {
+		  SEND_STRING(SS_LCTL(" ") SS_DELAY(10) "(");
+      }
+	  break;
     default:
       if (record->event.pressed) {
 		++usr_keystrokes;
@@ -94,11 +116,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	clear_str(key_strokes_str, BUFF_LEN - 1);
 	itostr_pad(key_strokes_str, BUFF_LEN - 2 , usr_keystrokes);
 	timer_key = timer_read32();
-	/*
-	This one is for no padding
-	bzero_str(key_strokes_str, BUFF_LEN - 1);
-	itostr_pad(key_strokes_str, nbrlen(usr_keystrokes) - 1 , usr_keystrokes);
-	*/
 	return true; // Process all keycodes normally
 }
 
@@ -210,6 +227,7 @@ const uint16_t PROGMEM combo5[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM combo6[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM combo7[] = {LAYER2_J, RCTL_K, COMBO_END};
 const uint16_t PROGMEM combo8[] = {LALT_S, LAYER2_F, COMBO_END};
+
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo1, KC_ESC),
     COMBO(combo2, KC_GRV),
@@ -239,7 +257,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_SYM] = LAYOUT(
 	KC_BSLS, KC_1, KC_2, KC_3, KC_4, KC_5,																	KC_6, KC_7, KC_8, KC_9, KC_0, KC_EQL,
 	KC_PIPE, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC,														KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PLUS,
-	KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS,								KC_TRNS, KC_NO, KC_NO, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_NO,
+	KC_NO, TMUXPREV_S, TMUXNEXT_S, TMUXPREV_W, TMUXNEXT_W, KC_NO, KC_NO, KC_TRNS,								KC_TRNS, KC_NO, KC_NO, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_NO,
 						KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,						KC_TRNS, KC_GRV, KC_TRNS, KC_TRNS, KC_TRNS
 	),
 
